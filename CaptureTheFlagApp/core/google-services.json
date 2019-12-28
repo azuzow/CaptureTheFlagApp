@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "685072018322",
+    "firebase_url": "https://capturetheflagapp.firebaseio.com",
+    "project_id": "capturetheflagapp",
+    "storage_bucket": "capturetheflagapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685072018322:android:1461b5e796bc590915ef4b",
+        "android_client_info": {
+          "package_name": "com.alexzuzow.capturetheflagapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "685072018322-trltjt4oa7cjlr83dptjhit2dr7chb75.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alexzuzow.capturetheflagapp",
+            "certificate_hash": "99a9111051e6cae25d74db876092c253a9494b23"
+          }
+        },
+        {
+          "client_id": "685072018322-sghdkjt2npbi0tuc9ub6i896e6gn3lk1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC94MBBqk3S5OqyEYpiI5EbG-r7TUpVK-4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "685072018322-sghdkjt2npbi0tuc9ub6i896e6gn3lk1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

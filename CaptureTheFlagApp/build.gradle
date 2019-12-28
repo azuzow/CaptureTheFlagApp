@@ -1,17 +1,19 @@
 buildscript {
-    ext.kotlinVersion = '1.3.41'
+
 
     repositories {
         mavenLocal()
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+
         jcenter()
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.7'
+
 
     }
 }
@@ -20,7 +22,7 @@ allprojects {
 
     version = '1.0'
     ext {
-        appName = "ctf_tag_app"
+        appName = "CaptureTheFlagApp"
         gdxVersion = '1.9.10'
         roboVMVersion = '2.3.7'
         box2DLightsVersion = '1.4'
@@ -38,9 +40,24 @@ allprojects {
     }
 }
 
+project(":desktop") {
+    apply plugin: "java-library"
+
+
+    dependencies {
+        implementation project(":core")
+        api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+        api "com.badlogicgames.gdx:gdx-controllers-desktop:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-controllers-platform:$gdxVersion:natives-desktop"
+        api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+
+    }
+}
+
 project(":android") {
     apply plugin: "android"
-    apply plugin: "kotlin-android"
 
     configurations { natives }
 
@@ -58,37 +75,42 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86_64"
-        api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         api "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
-        api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    }
-}
-
-project(":core") {
-    apply plugin: "kotlin"
-
-
-    dependencies {
-        api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
-        api "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
-        api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
+
     }
 }
 
-project(":desktop") {
-    apply plugin: "kotlin"
+project(":ios") {
+    apply plugin: "java-library"
+    apply plugin: "robovm"
 
 
     dependencies {
         implementation project(":core")
-        api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
-        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
-        api "com.badlogicgames.gdx:gdx-controllers-desktop:$gdxVersion"
-        api "com.badlogicgames.gdx:gdx-controllers-platform:$gdxVersion:natives-desktop"
-        api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+        api "com.mobidevelop.robovm:robovm-rt:$roboVMVersion"
+        api "com.mobidevelop.robovm:robovm-cocoatouch:$roboVMVersion"
+        api "com.badlogicgames.gdx:gdx-backend-robovm:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
+        api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
+
+
+
+    }
+}
+
+project(":core") {
+    apply plugin: "java-library"
+
+    dependencies {
+        api "com.badlogicgames.gdx:gdx:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
+        api "com.esotericsoftware:kryonet:2.22.0-RC1"
+
+
     }
 }

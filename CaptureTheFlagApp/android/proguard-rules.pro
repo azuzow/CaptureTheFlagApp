@@ -29,7 +29,12 @@
 -dontwarn com.badlogic.gdx.graphics.g2d.freetype.FreetypeBuild
 
 -keep class com.badlogic.gdx.controllers.android.AndroidControllers
+-keep class pl.mk5.gdx.fireapp.**{*;}
+-keepattributes Signature
+-keepattributes *Annotation*
 
+# Keep all POJO objects which you had used as Database models.
+-keepclassmembers class com.alexzuzow.models.** {*;}
 -keepclassmembers class com.badlogic.gdx.backends.android.AndroidInput* {
    <init>(com.badlogic.gdx.Application, android.content.Context, java.lang.Object, com.badlogic.gdx.backends.android.AndroidApplicationConfiguration);
 }
