@@ -9,8 +9,10 @@ import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -24,7 +26,9 @@ public class MainMenuScreen implements Screen {
     private Viewport gamePort;
     private int vWidth= 300;
     private int vHeight= 150;
-    public MainMenuScreen(CaptureTheFlagApp game){
+    private boolean connected;
+    public MainMenuScreen(CaptureTheFlagApp game,boolean connected){
+        this.connected=connected;
         this.game =game;
         playButton= new Texture("PlayButton.png");
         exitButton=new Texture("ExitButton.png");
@@ -60,6 +64,8 @@ public class MainMenuScreen implements Screen {
         if((Gdx.input.getX()<x+vWidth && Gdx.input.getX()>x)&& (Gdx.input.getY()>y-vHeight&&Gdx.input.getY()<y)){
             if(Gdx.input.isTouched()){
                 game.setScreen(new GameScreen(game));
+                this.dispose();
+
 
             }
         }
@@ -99,6 +105,8 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        playButton.dispose();
+        exitButton.dispose();
     }
+
 }

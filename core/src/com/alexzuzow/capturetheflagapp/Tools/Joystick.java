@@ -22,16 +22,16 @@ public class Joystick{
 
         touchpadStyle = new Touchpad.TouchpadStyle();
         touchpadStyle.knob = touchpadSkin.getDrawable("touchKnob");
-        touchpadStyle.knob.setMinWidth(20);
-        touchpadStyle.knob.setMinHeight(20);
-        Pixmap background = new Pixmap(400, 400, Pixmap.Format.RGBA8888);
+        touchpadStyle.knob.setMinWidth(16);
+        touchpadStyle.knob.setMinHeight(16);
+        Pixmap background = new Pixmap(300, 300, Pixmap.Format.RGBA8888);
         background.setBlending(Pixmap.Blending.None);
         background.setColor(1, 1, 1, .6f);
-        background.fillCircle(200, 200, 200);
+        background.fillCircle(150, 150, 150);
 
         touchpadStyle.background = new TextureRegionDrawable(new TextureRegion(new Texture(background)));
 
-        touchpad = new Touchpad(1, touchpadStyle);
+        touchpad = new Touchpad(5, touchpadStyle);
         gui.add(touchpad).bottom().left().pad(0f, 700f, 100f, 0f).size(Value.percentWidth(0.15f)).expandX();
 
     }

@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class ServerGame {
-    String IPConnection = "localhost";
+    String IPConnection = "3.132.69.26";
     private int port = 25565;
     public Server server;
 
@@ -31,5 +31,6 @@ public class ServerGame {
     
     public static void main(String[] args) throws IOException {
         new ServerGame();
+
     }
 }

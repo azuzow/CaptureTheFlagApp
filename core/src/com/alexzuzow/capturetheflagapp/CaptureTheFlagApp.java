@@ -1,7 +1,5 @@
 package com.alexzuzow.capturetheflagapp;
 
-
-import com.alexzuzow.capturetheflagapp.Buffers.BufferAddExistingUsers;
 import com.alexzuzow.capturetheflagapp.Buffers.BufferAddNewUser;
 import com.alexzuzow.capturetheflagapp.Listeners.ClientGameListener;
 import com.alexzuzow.capturetheflagapp.Screens.MainMenuScreen;
@@ -11,8 +9,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.kryonet.Client;
-
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +33,7 @@ public class CaptureTheFlagApp extends Game {
     public static final short SPAWN_BIT=64;
     public static final short GOAL_BIT = 128;
 
+
     public static long totalPlayers;
     public static  Client client;
     private int port = 25565;
@@ -44,58 +41,61 @@ public class CaptureTheFlagApp extends Game {
     private ClientGameListener cgl;
     public static int blueTeamSize=0;
     public static int redTeamSize=0;
-
+    private boolean connected;
 
     @Override
     public void create() {
         playerList = new HashMap<Integer, User>();
         newPlayers= new Array<BufferAddNewUser>();
         disconectedPlayers=new Array<User>();
+
         connectClient();
         totalPlayers = 1;
-
-
-
+//        connected=false;
         batch = new SpriteBatch();
-        setScreen(new MainMenuScreen(this));
+        setScreen(new MainMenuScreen(this,connected));
     }
 
     @Override
     public void render() {
         super.render();
 
-
     }
+
     @Override
     public void dispose() {
         batch.dispose();
-
     }
 
     public void connectClient() {
         client = new Client();
+        int timeout = 5000;
         client.start();
-
         cgl = new ClientGameListener();
         cgl.init(client);
         KryoHelper.registerClasses(client);
         client.addListener(cgl);
-
         try {
 
-            int timeout = 5000;
             client.connect(timeout, ipAddress, port);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        clientID= client.getID();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+
+        }
+        clientID = client.getID();
         System.out.println("=====================================================================================");
-        System.out.println("CLIENT ID: "+ clientID);
+        System.out.println("CLIENT ID: " + clientID);
         System.out.println("=====================================================================================");
-//        playerList.put(clientID,null);
+
+
+
 
     }
+
 
 
 }

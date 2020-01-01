@@ -8,6 +8,7 @@ import com.alexzuzow.capturetheflagapp.CaptureTheFlagApp;
 import com.alexzuzow.capturetheflagapp.Scenes.Hud;
 import com.alexzuzow.capturetheflagapp.Sprites.Portal;
 import com.alexzuzow.capturetheflagapp.Sprites.PowerUp;
+import com.alexzuzow.capturetheflagapp.Sprites.SpeedPad;
 import com.alexzuzow.capturetheflagapp.Sprites.User;
 import com.alexzuzow.capturetheflagapp.Sprites.Bomb;
 import com.alexzuzow.capturetheflagapp.Sprites.SpawnPoint;
@@ -60,7 +61,6 @@ public class GameScreen extends ApplicationAdapter implements Screen{
     private int blueTeamSize;
 
     public GameScreen(CaptureTheFlagApp game) {
-
         redTeamSize = 0;
         blueTeamSize = 0;
         this.game = game;
@@ -86,6 +86,9 @@ public class GameScreen extends ApplicationAdapter implements Screen{
         redFlagSpriteTexture = new Texture(Gdx.files.internal("RedFlagSprite.png"));
         redFlagSprite = new Sprite(redFlagSpriteTexture, 0, 0, 40, 40);
         redFlagSprite.setBounds(0, 0, 40f / CaptureTheFlagApp.PPM, 40f / CaptureTheFlagApp.PPM);
+        System.out.println("===================================================================");
+        System.out.println("HASNT CRASHED YET");
+        System.out.println("===================================================================");
     }
 
 
@@ -104,11 +107,16 @@ public class GameScreen extends ApplicationAdapter implements Screen{
         b2dr.render(world, gameCam.combined);
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
-        //draw portal animations
+            //draw portal animations
         for (Portal portal :creator.getPortals()){
             TextureRegion currentFrame= portal.getAnimation(portal.getStateTime());
             game.batch.draw(currentFrame,portal.getX()-currentFrame.getRegionWidth()/CaptureTheFlagApp.PPM/2,portal.getY()-currentFrame.getRegionHeight()/CaptureTheFlagApp.PPM/2,40/CaptureTheFlagApp.PPM,40/CaptureTheFlagApp.PPM);
             portal.setStateTime(delta);
+        }
+        for (SpeedPad speedPad :creator.getSpeedPads()){
+            TextureRegion currentFrame= speedPad.getAnimation(speedPad.getStateTime());
+            game.batch.draw(currentFrame,speedPad.getX()-currentFrame.getRegionWidth()/CaptureTheFlagApp.PPM/2,speedPad.getY()-currentFrame.getRegionHeight()/CaptureTheFlagApp.PPM/2,40/CaptureTheFlagApp.PPM,40/CaptureTheFlagApp.PPM);
+            speedPad.setStateTime(delta);
         }
 
         for (HashMap.Entry<Integer, User> entry : CaptureTheFlagApp.playerList.entrySet()) {
@@ -137,18 +145,30 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 
 
     public void handleInput(float dt) {
+
         if(CaptureTheFlagApp.playerList.containsKey(CaptureTheFlagApp.clientID)) {
             if (!CaptureTheFlagApp.playerList.get(CaptureTheFlagApp.clientID).isAlive()) {
                 CaptureTheFlagApp.playerList.get(CaptureTheFlagApp.clientID).b2Body.setLinearVelocity(0, 0);
             } else {
+//                float maxSpeed=4f;
+//                Vector2 vel =       CaptureTheFlagApp.playerList.get(CaptureTheFlagApp.clientID).b2Body.getLinearVelocity();
+//                if ( vel.x >=maxSpeed ){
+//                    CaptureTheFlagApp.playerList.get(CaptureTheFlagApp.clientID).b2Body.setLinearVelocity(maxSpeed,vel.y);
+//                }
+//                if ( vel.y >=maxSpeed ){
+//                    CaptureTheFlagApp.playerList.get(CaptureTheFlagApp.clientID).b2Body.setLinearVelocity(vel.x,maxSpeed);
+//                }
+
                 if(CaptureTheFlagApp.playerList.get(CaptureTheFlagApp.clientID).hasPowerUpSpeed()){
                 float x =(hud  .getTouchPad().getKnobPercentX()*55);
                 float y = (hud  .getTouchPad().getKnobPercentY()*55);
                 CaptureTheFlagApp.playerList.get(CaptureTheFlagApp.clientID).b2Body.applyForce(new Vector2(x * dt, y*dt), CaptureTheFlagApp.playerList.get(CaptureTheFlagApp.clientID).b2Body.getWorldCenter(), true);
+//                    CaptureTheFlagApp.playerList.get(CaptureTheFlagApp.clientID).b2Body.applyAngularImpulse(3f,true);
 }
                 else{
-                    float x =(hud  .getTouchPad().getKnobPercentX()*45);
-                    float y = (hud  .getTouchPad().getKnobPercentY()*45);
+                    float x =(hud  .getTouchPad().getKnobPercentX()*65);
+                    float y = (hud  .getTouchPad().getKnobPercentY()*65);
+//                    CaptureTheFlagApp.playerList.get(CaptureTheFlagApp.clientID).b2Body.applyAngularImpulse(10f,true);
                     CaptureTheFlagApp.playerList.get(CaptureTheFlagApp.clientID).b2Body.applyForce(new Vector2(x * dt, y*dt), CaptureTheFlagApp.playerList.get(CaptureTheFlagApp.clientID).b2Body.getWorldCenter(), true);
                 }
 
@@ -266,6 +286,9 @@ public class GameScreen extends ApplicationAdapter implements Screen{
             for (PowerUp powerUp : creator.getPowerUps()) {
                 powerUp.update(dt);
             }
+            for (SpeedPad speedPad : creator.getSpeedPads()) {
+                speedPad.update(dt);
+            }
             if (creator.getBlueFlag().wasFlagCaptured()) {
                 //update red score +1
                 creator.getBlueFlag().resetFlag();
@@ -316,6 +339,9 @@ public class GameScreen extends ApplicationAdapter implements Screen{
         }
         for(Portal portal: creator.getPortals()){
             portal.dispose();
+        }
+        for(SpeedPad speedPad: creator.getSpeedPads()){
+            speedPad.dispose();
         }
 
     }

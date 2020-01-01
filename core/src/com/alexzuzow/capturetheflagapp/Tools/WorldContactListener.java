@@ -11,6 +11,7 @@ import com.alexzuzow.capturetheflagapp.Sprites.Lava;
 import com.alexzuzow.capturetheflagapp.Sprites.Portal;
 import com.alexzuzow.capturetheflagapp.Sprites.PowerUp;
 import com.alexzuzow.capturetheflagapp.Sprites.SpawnPoint;
+import com.alexzuzow.capturetheflagapp.Sprites.SpeedPad;
 import com.alexzuzow.capturetheflagapp.Sprites.Spike;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -117,6 +118,9 @@ public class WorldContactListener implements ContactListener {
                     else if (FixB.getUserData() instanceof Portal) {
                         ((InteractiveTileObject) FixB.getUserData()).onContact(FixA.getUserData());
                     }
+                    else if (FixB.getUserData() instanceof SpeedPad) {
+                        ((InteractiveTileObject) FixB.getUserData()).onContact(FixA.getUserData());
+                    }
                 }
 //                FixB is player
                 else {
@@ -154,6 +158,9 @@ public class WorldContactListener implements ContactListener {
                         ((InteractiveTileObject) FixA.getUserData()).onContact(FixB.getUserData());
                     }
                     else if (FixA.getUserData() instanceof Portal) {
+                        ((InteractiveTileObject) FixA.getUserData()).onContact(FixB.getUserData());
+                    }
+                    else if (FixA.getUserData() instanceof SpeedPad) {
                         ((InteractiveTileObject) FixA.getUserData()).onContact(FixB.getUserData());
                     }
 

@@ -65,7 +65,7 @@ public class Bomb extends InteractiveTileObject {
     public void update(float dt){
         if(hasExploded){
             long currentTime = System.currentTimeMillis();
-            if((currentTime-respawnTimer)/1000>=60){
+            if((currentTime-respawnTimer)/1000>=30){
                 resetBomb();
             }
         }

@@ -11,6 +11,8 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
+import static java.lang.Math.PI;
+
 
 public class User extends Character {
     private int clinetID;
@@ -55,6 +57,9 @@ public class User extends Character {
     }
 
     public void update(float x, float y) {
+        setOrigin(b2Body.getLocalCenter().x+getWidth()/2, b2Body.getLocalCenter().y+getHeight()/2);
+        setRotation((float)(b2Body.getAngle()*180.f/PI));
+
         if(setToTeleport){
 //            System.out.println(x);
 //            System.out.println(y);
@@ -136,6 +141,7 @@ public void onLavaContact(){
 
 
     public void definePlayer() {
+
         setToDestroy = false;
         destroyed = false;
         BodyDef bdef = new BodyDef();
@@ -150,7 +156,9 @@ public void onLavaContact(){
         CircleShape shape = new CircleShape();
         shape.setRadius(20 / CaptureTheFlagApp.PPM);
         fdef.shape = shape;
-//        fdef.density=10;
+        fdef.restitution=0.2f;
+//        fdef.density=5;
+        fdef.density=8;
         fdef.filter.categoryBits = CaptureTheFlagApp.PLAYER_BIT;
 
 

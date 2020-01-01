@@ -7,6 +7,7 @@ import com.alexzuzow.capturetheflagapp.Sprites.Corner;
 import com.alexzuzow.capturetheflagapp.Sprites.Lava;
 import com.alexzuzow.capturetheflagapp.Sprites.Portal;
 import com.alexzuzow.capturetheflagapp.Sprites.PowerUp;
+import com.alexzuzow.capturetheflagapp.Sprites.SpeedPad;
 import com.alexzuzow.capturetheflagapp.Sprites.User;
 import com.alexzuzow.capturetheflagapp.Sprites.Bomb;
 import com.alexzuzow.capturetheflagapp.Sprites.Button;
@@ -38,6 +39,7 @@ public class B2WorldCreator {
     private Array<Lava> lavas;
     private Array<PowerUp> powerUps;
     private Array<Portal> portals;
+    private Array<SpeedPad> speedPads;
     //maybe i can fix the spawns by sending the spawn object
     public B2WorldCreator(GameScreen screen) {
 
@@ -77,7 +79,6 @@ public class B2WorldCreator {
         portals=new Array<Portal>();
         Array<Portal> temp = new Array<>();
         int portalPairSize= ((MapGroupLayer)map.getLayers().get("Portals")).getLayers().getCount();
-
         for (int i = 0; i <portalPairSize ; i++) {
             for (MapObject object : ((MapGroupLayer) map.getLayers().get("Portals")).getLayers().get(i).getObjects().getByType(EllipseMapObject.class)) {
 
@@ -92,10 +93,28 @@ public class B2WorldCreator {
                     }
                     temp.clear();
                 }
-
             }
         }
+        //Neutral SpeedPad
+//        System.out.println(((MapGroupLayer)map.getLayers().get("SpeedPad")).getLayers().get(0).getObjects().getCount());
+        speedPads=new Array<SpeedPad>();
+        for (MapObject object : ((MapGroupLayer) map.getLayers().get("SpeedPad")).getLayers().get("SpeedPadNeutral").getObjects().getByType(EllipseMapObject.class)) {
+            Ellipse ellipse = ((EllipseMapObject) object).getEllipse();
 
+            speedPads.add(new SpeedPad(screen, null, ellipse,"speedpad.png",false,false));
+        }
+        //Red SpeedPad
+        for (MapObject object : ((MapGroupLayer) map.getLayers().get("SpeedPad")).getLayers().get("SpeedPadRed").getObjects().getByType(EllipseMapObject.class)) {
+            Ellipse ellipse = ((EllipseMapObject) object).getEllipse();
+
+            speedPads.add(new SpeedPad(screen, null, ellipse,"speedpadred.png",false,true));
+        }
+        //Blue SpeedPad
+        for (MapObject object : ((MapGroupLayer) map.getLayers().get("SpeedPad")).getLayers().get("SpeedPadBlue").getObjects().getByType(EllipseMapObject.class)) {
+            Ellipse ellipse = ((EllipseMapObject) object).getEllipse();
+
+            speedPads.add(new SpeedPad(screen, null, ellipse,"speedpadblue.png",true,false));
+        }
         //create button object
         buttons = new Array<Button>();
         for (MapObject object : map.getLayers().get(3).getObjects().getByType(EllipseMapObject.class)) {
@@ -160,6 +179,9 @@ public class B2WorldCreator {
     }
     public Array<Portal> getPortals() {
         return portals;
+    }
+    public Array<SpeedPad>getSpeedPads(){
+        return speedPads;
     }
 
 }
