@@ -1,5 +1,5 @@
 # CaptureTheFlagApp
-created using LibGDX and google compute engine for server hosting
+created using LibGDX and google compute engine for server hosting and Kryonet for handling server packets
 
 cross platform android/ios/desktop capture the flag game where the goal is to capture the other team's flag and bring it back to your base
 
